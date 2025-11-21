@@ -23,6 +23,20 @@ def escrever_arquivo(caminho_arquivo: str, conteudo: list) -> None:
         arquivo.writelines(conteudo)
 
 
+def exibir(gramatica: list) -> None:
+    print("=-=-=-=-= GRAMATICA =-=-=-=-=")
+    print("Variaveis:", gramatica[0].replace("\n", ""))
+    print("Terminais:", gramatica[1].replace("\n", ""))
+    print("Varia. de partida:", gramatica[2].replace("\n", ""))
+    print("Producoes:")
+    for linha in gramatica[3:]:
+        print(f"\t{linha.replace('\n', '')}")
+
+
+def desc(variavel: any, txt="variavel") -> None:
+    print(txt, variavel)
+
+
 if __name__ == "__main__":
     caminho = "gramatica.txt"
     linhas = ler_arquivo(caminho)
