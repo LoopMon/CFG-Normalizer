@@ -59,7 +59,7 @@ def limpar_producoes_nulas(gramatica: list):
 
 if __name__ == "__main__":
     from time import time
-    from utils import ler_arquivo, exibir, desc
+    from utils import ler_arquivo, exibir
     import os
 
     start = time()
@@ -70,6 +70,5 @@ if __name__ == "__main__":
     gramatica = ler_arquivo(os.path.join(diretorio, arquivo))
     gramatica_limpa = limpar_producoes_nulas(gramatica)
 
-    # print("\n=-=-= GRAMATICA LIMPA =-=-=")
     exibir(gramatica_limpa)
     print(f"\nTempo: {time() - start:.8f} segundos")
