@@ -7,9 +7,12 @@ def ler_arquivo(caminho_arquivo: str) -> list:
     Returns:
     list: O conteúdo do arquivo como uma lista de linhas.
     """
+    lista = []
     with open(caminho_arquivo, "r", encoding="utf-8") as arquivo:
-        conteudo = arquivo.readlines()
-    return conteudo
+        for linha in arquivo:
+            aux = linha.replace("\n", "")
+            lista.append(aux)
+    return lista
 
 
 def escrever_arquivo(caminho_arquivo: str, conteudo: list) -> None:
@@ -23,18 +26,14 @@ def escrever_arquivo(caminho_arquivo: str, conteudo: list) -> None:
         arquivo.writelines(conteudo)
 
 
-def exibir(gramatica: list) -> None:
+def exibir_gramatica(gramatica: list) -> None:
     print("=-=-=-=-= GRAMATICA =-=-=-=-=")
     print("Variaveis:", gramatica[0].replace("\n", ""))
     print("Terminais:", gramatica[1].replace("\n", ""))
-    print("Varia. de partida:", gramatica[2].replace("\n", ""))
+    print("Var. de partida:", gramatica[2].replace("\n", ""))
     print("Producoes:")
     for linha in gramatica[3:]:
         print(f"\t{linha.replace('\n', '')}")
-
-
-def desc(variavel: any, txt="variavel") -> None:
-    print(txt, variavel)
 
 
 if __name__ == "__main__":
