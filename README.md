@@ -15,10 +15,25 @@ O objetivo é transformar qualquer GLC arbitrária em uma versão equivalente, p
 ## 🚀 **Funcionalidades**
 
 * 📥 Recebe uma gramática escrita de forma simples (texto bruto).
+  * Forma aceita:
+    ```txt
+    S A B
+    a b eps
+    S
+    S AB
+    A aAA
+    A eps
+    B bBB
+    B eps
+    ```
+  * Primeira linha: Variáveis da gramática
+  * Segunda linha: Terminais 
+  * Terceira linha: Variável de partida
+  * Quarta em diante: Produções (A -> $\alpha$)
 * 🧹 Realiza automaticamente todas as etapas de limpeza:
-  * remoção de ε-produções
-  * remoção de produções-unidade
-  * eliminação de símbolos inúteis (inalcançáveis ou improdutivos)
+  * [remoção de ε-produções](limpar_producoes_nulas.py)
+  * [remoção de produções-unidade](limpar_producoes_unidade.py)
+  * [eliminação de símbolos inúteis (inalcançáveis ou improdutivos)](limpar_producoes_inuteis.py)
 * 🧩 Normaliza a gramática para **Forma Normal de Chomsky**.
 * 📤 Retorna a gramática final já padronizada e pronta para uso.
 * 🛠️ Oferece funções independentes para cada etapa (útil para estudos ou debugging).
