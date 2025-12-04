@@ -23,7 +23,9 @@ def escrever_arquivo(caminho_arquivo: str, conteudo: list) -> None:
     conteudo (list): O conteúdo a ser escrito no arquivo, como uma lista de linhas.
     """
     with open(caminho_arquivo, "w", encoding="utf-8") as arquivo:
-        arquivo.writelines(conteudo)
+        for linha in conteudo:
+            aux = f"{linha}\n"
+            arquivo.write(aux)
 
 
 def exibir_gramatica(gramatica: list) -> None:
