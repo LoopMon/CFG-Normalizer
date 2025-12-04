@@ -11,6 +11,10 @@ def limpar_producoes_unidade(gramatica: list):
         if prod_partes[1] in gramatica[0] and prod_partes[0] != prod_partes[1]:
             pares_unidade.append(producao)
 
+    if len(pares_unidade) == 0:
+        gramatica_limpa = gramatica[:]
+        return gramatica_limpa
+
     # pares por transitividade (S, A), (A, B) -> (S, B)
     i = 0
     while i < len(pares_unidade):
