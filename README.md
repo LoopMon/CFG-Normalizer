@@ -29,7 +29,7 @@ O objetivo é transformar qualquer GLC arbitrária em uma versão equivalente, p
   * Primeira linha: Variáveis da gramática
   * Segunda linha: Terminais 
   * Terceira linha: Variável de partida
-  * Quarta em diante: Produções (A -> $\alpha$)
+  * Quarta em diante: Produções $A \to \alpha$
 * 🧹 Realiza automaticamente todas as etapas de limpeza:
   * [remoção de ε-produções](limpar_producoes_nulas.py)
   * [remoção de produções-unidade](limpar_producoes_unidade.py)
