@@ -1,0 +1,11 @@
+S A B T1 T2 T3 V1 V2
+a b c
+S
+S V1T1
+A V2T2
+B AT3
+T1 a
+T2 b
+T3 c
+V1 AB
+V2 T1T1
