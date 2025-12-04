@@ -4,7 +4,6 @@ import re
 
 def forma_normal_chomsky(gramatica: list[str]) -> list[str]:
     gramatica_normalizada = gramatica[:]
-    print("Inicio:", gramatica_normalizada)
 
     # Procurar e Trocar terminais por novas variaveis
     producoes_para_terminais = []
@@ -14,7 +13,6 @@ def forma_normal_chomsky(gramatica: list[str]) -> list[str]:
         sentenca = list(parte_dir)
 
         if len(sentenca) == 1:
-            print("Tamanho 1:", producao)
             continue
 
         # Cada item da producao[i]
@@ -63,7 +61,6 @@ def forma_normal_chomsky(gramatica: list[str]) -> list[str]:
         gramatica_normalizada[i + 3] = f"{parte_esq} {producao_atual_atualizada}"
 
     # Procurar producoes com mais de 2 variaveis e criar novas producoes
-    print("1a passo:", gramatica_normalizada)
     producoes_para_duas_variaveis = []
     cont_variavel: int = 1
     verificar = True
