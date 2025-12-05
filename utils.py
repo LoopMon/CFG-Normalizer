@@ -29,17 +29,19 @@ def escrever_arquivo(caminho_arquivo: str, conteudo: list) -> None:
 
 
 def exibir_gramatica(gramatica: list) -> None:
+    print()
     print("=-=-=-=-= GRAMATICA =-=-=-=-=")
-    print("Variaveis:", gramatica[0].replace("\n", ""))
-    print("Terminais:", gramatica[1].replace("\n", ""))
-    print("Var. de partida:", gramatica[2].replace("\n", ""))
+    print("Variaveis:", gramatica[0])
+    print("Terminais:", gramatica[1])
+    print("Var. de partida:", gramatica[2])
     print("Producoes:")
-    for linha in gramatica[3:]:
-        print(f"\t{linha.replace('\n', '')}")
+    for producao in gramatica[3:]:
+        parte_esq, parte_dir = producao.split()
+        print(f"{'-' * 4} {parte_esq} -> {parte_dir}")
+    print()
 
 
 if __name__ == "__main__":
-    caminho = "gramatica.txt"
-    linhas = ler_arquivo(caminho)
-    for linha in linhas:
-        print(linha.strip())
+    caminho = "gramaticas/gramatica_trabalho.txt"
+    gramatica = ler_arquivo(caminho)
+    exibir_gramatica(gramatica)
