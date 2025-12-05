@@ -28,16 +28,30 @@ def escrever_arquivo(caminho_arquivo: str, conteudo: list) -> None:
             arquivo.write(aux)
 
 
-def exibir_gramatica(gramatica: list) -> None:
+def exibir_gramatica(gramatica: list, agrupar=False) -> None:
     print()
     print("=-=-=-=-= GRAMATICA =-=-=-=-=")
     print("Variaveis:", gramatica[0])
     print("Terminais:", gramatica[1])
     print("Var. de partida:", gramatica[2])
     print("Producoes:")
-    for producao in gramatica[3:]:
-        parte_esq, parte_dir = producao.split()
-        print(f"{'-' * 4} {parte_esq} -> {parte_dir}")
+    if not agrupar:
+        for producao in gramatica[3:]:
+            parte_esq, parte_dir = producao.split()
+            print(f"{'-' * 4} {parte_esq} -> {parte_dir}")
+        print()
+        return
+
+    variaveis = gramatica[0].split()
+    for variavel in variaveis:
+        producao_agrupada = f"{'-' * 4} {variavel} ->"
+        for producao in gramatica[3:]:
+            parte_esq, parte_dir = producao.split()
+
+            if variavel == parte_esq:
+                producao_agrupada += f" {parte_dir} |"
+        producao_agrupada = producao_agrupada[:-1]
+        print(producao_agrupada)
     print()
 
 
