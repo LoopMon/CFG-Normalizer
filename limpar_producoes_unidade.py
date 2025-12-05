@@ -4,35 +4,38 @@
 def limpar_producoes_unidade(gramatica: list):
     gramatica_limpa = []
     pares_unidade = []
+    indice_primeira_producao = 3
 
     # pares unidade diretos (S, A)
-    for producao in gramatica[3:]:
-        prod_partes = producao.split()
-        if prod_partes[1] in gramatica[0] and prod_partes[0] != prod_partes[1]:
+    for producao in gramatica[indice_primeira_producao:]:
+        parte_esq, parte_dir = producao.split()
+        if parte_dir in gramatica[0] and parte_esq != parte_dir:
             pares_unidade.append(producao)
 
-    if len(pares_unidade) == 0:
-        gramatica_limpa = gramatica[:]
-        return gramatica_limpa
+    # se nao existe pares unidades, mantem a G original
+    n_pares_unidade = len(pares_unidade)
+    if n_pares_unidade == 0:
+        return gramatica
 
     # pares por transitividade (S, A), (A, B) -> (S, B)
     i = 0
-    while i < len(pares_unidade):
-        par_partes = pares_unidade[i].split()
+    while i < n_pares_unidade:
+        par_unidade_esq_i, par_unidade_dir_i = pares_unidade[i].split()
+        # par_partes = pares_unidade[i].split()
         j = 0
-        resetou = False
-        while j < len(pares_unidade):
-            prod_partes = pares_unidade[j].split()
-            if par_partes[1] == prod_partes[0] and par_partes[0] != prod_partes[1]:
-                aux = f"{par_partes[0]} {prod_partes[1]}"
-                if aux not in pares_unidade:
-                    pares_unidade.append(aux)
-                    j = 0
-                    resetou = True
-            if resetou:
-                resetou = False
-            else:
-                j += 1
+        while j < n_pares_unidade:
+            par_unidade_esq_j, par_unidade_dir_j = pares_unidade[j].split()
+            # prod_partes = pares_unidade[j].split()
+            if (
+                par_unidade_dir_i == par_unidade_esq_j
+                and par_unidade_esq_i != par_unidade_dir_j
+            ):
+                nova_par_unidade = f"{par_unidade_esq_i} {par_unidade_dir_j}"
+                if nova_par_unidade not in pares_unidade:
+                    pares_unidade.append(nova_par_unidade)
+                    # recomecar a verificacao dos pares unidade
+                    j = -1
+            j += 1
         i += 1
 
     # Criar gramatica limpa sem os pares unidade
@@ -40,22 +43,26 @@ def limpar_producoes_unidade(gramatica: list):
     gramatica_limpa.append(gramatica[1])  # terminais
     gramatica_limpa.append(gramatica[2])  # variavel de partida
 
-    for i in range(0, len(pares_unidade)):
-        par_partes = pares_unidade[i].split()
+    for par_unidade in pares_unidade:
+        var_esq, var_dir = par_unidade.split()
         for j in range(3, len(gramatica)):
-            prod_partes = gramatica[j].split()
+            parte_esq, parte_dir = gramatica[j].split()
 
-            if gramatica[j] in pares_unidade or prod_partes[0] == prod_partes[1]:
-                continue
-
-            if gramatica[j] not in gramatica_limpa:
+            if (
+                gramatica[j] not in gramatica_limpa
+                and gramatica[j] not in pares_unidade
+            ):
                 gramatica_limpa.append(gramatica[j])
 
-            if par_partes[1] == prod_partes[0]:
-                aux = f"{par_partes[0]} {prod_partes[1]}"
-                if aux in gramatica_limpa:
+            if var_dir == parte_esq:
+                nova_producao = f"{var_esq} {parte_dir}"
+                if (
+                    nova_producao in gramatica_limpa
+                    or var_esq == parte_dir
+                    or nova_producao in pares_unidade
+                ):
                     continue
-                gramatica_limpa.append(aux)
+                gramatica_limpa.append(nova_producao)
 
     return gramatica_limpa
 
@@ -70,11 +77,13 @@ if __name__ == "__main__":
     os.system("cls" if os.name == "nt" else "clear")
 
     diretorio = "gramaticas"
-    arquivo = "gramatica_complexa.txt"
-    gramatica = ler_arquivo(os.path.join(diretorio, arquivo))
-    gramatica = limpar_producoes_nulas(gramatica)
-    gramatica_limpa = limpar_producoes_unidade(gramatica)
-    gramatica_limpa[3:] = sorted(gramatica_limpa[3:])
+    arquivo = "unidade/gramatica_2.txt"
 
-    exibir_gramatica(gramatica_limpa)
+    gramatica = ler_arquivo(os.path.join(diretorio, arquivo))
+    exibir_gramatica(gramatica)
+    gramatica = limpar_producoes_nulas(gramatica)
+    exibir_gramatica(gramatica)
+    gramatica = limpar_producoes_unidade(gramatica)
+
+    exibir_gramatica(gramatica, True)
     print(f"\nTempo: {time() - start:.8f} segundos")

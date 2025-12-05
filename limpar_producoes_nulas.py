@@ -3,28 +3,30 @@
 
 def limpar_producoes_nulas(gramatica: list):
     gramatica_limpa = []
-
+    indice_primeira_producao = 3
+    n_producoes = len(gramatica) - indice_primeira_producao
     # buscar producoes nulas (A -> ε)
     variaveis_nulas = []
     for producao in gramatica[3:]:
-        prod_partes = producao.split()
-        if prod_partes[1] == "eps":
-            variaveis_nulas.append(prod_partes[0])
+        parte_esq, parte_dir = producao.split()
+        if parte_dir == "eps":
+            variaveis_nulas.append(parte_esq)
 
-    # busca producoes que levam em producoes nulas (A -> * -> ε)
+    # buscar producoes que levam em producoes nulas (A -> * -> ε)
     while True:
         re_verificar = False
-        for i in range(3, len(gramatica)):
-            prod_partes = gramatica[i].split()
-            diferenca = set(prod_partes[1]) - set(variaveis_nulas)
+        for i in range(n_producoes):
+            indice = indice_primeira_producao + i
+            parte_esq, parte_dir = gramatica[indice].split()
+            diferenca = set(parte_dir) - set(variaveis_nulas)
 
             if diferenca:
                 continue
 
-            if prod_partes[0] in variaveis_nulas:
+            if parte_esq in variaveis_nulas:
                 continue
 
-            variaveis_nulas.append(prod_partes[0])
+            variaveis_nulas.append(parte_esq)
             re_verificar = True
 
         if not re_verificar:
@@ -34,17 +36,18 @@ def limpar_producoes_nulas(gramatica: list):
     gramatica_limpa.append(gramatica[0])  # variaveis
     gramatica_limpa.append(gramatica[1])  # terminais
     gramatica_limpa.append(gramatica[2])  # variavel de partida
+    # producoes
+    for i in range(n_producoes):
+        indice = indice_primeira_producao + i
+        parte_esq, parte_dir = gramatica[indice].split()
 
-    for i in range(3, len(gramatica)):
-        prod_partes = gramatica[i].split()
-
-        visitados = set([prod_partes[1]])
-        fila = [prod_partes[1]]
+        visitados = set([parte_dir])
+        fila = [parte_dir]
 
         while fila:
             atual = fila.pop(0)
-            if prod_partes[1] != "eps" and atual != "":
-                producao = f"{prod_partes[0]} {atual}"
+            if parte_dir != "eps" and atual != "":
+                producao = f"{parte_esq} {atual}"
                 gramatica_limpa.append(producao)
 
             for j, c in enumerate(atual):
@@ -59,16 +62,16 @@ def limpar_producoes_nulas(gramatica: list):
 
 if __name__ == "__main__":
     from time import time
-    from utils import ler_arquivo
+    from utils import ler_arquivo, exibir_gramatica
     import os
 
     start = time()
     os.system("cls" if os.name == "nt" else "clear")
 
     diretorio = "gramaticas"
-    arquivo = "gramatica_complexa.txt"
+    arquivo = "gramatica_portal.txt"
     gramatica = ler_arquivo(os.path.join(diretorio, arquivo))
+    exibir_gramatica(gramatica)
     gramatica_limpa = limpar_producoes_nulas(gramatica)
-
-    print(gramatica_limpa)
+    exibir_gramatica(gramatica_limpa)
     print(f"\nTempo: {time() - start:.8f} segundos")
