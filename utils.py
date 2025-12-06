@@ -1,12 +1,14 @@
 def ler_arquivo(caminho_arquivo: str) -> list:
-    """Lê o conteúdo de um arquivo e retorna como um array.
-
-    Args:
-    caminho_arquivo (str): O caminho para o arquivo a ser lido.
-
-    Returns:
-    list: O conteúdo do arquivo como uma lista de linhas.
     """
+    Lê todas as linhas de um arquivo .txt e retorna seu conteúdo como uma lista de strings.
+
+    Parametros:
+        caminho_arquivo (str): Caminho absoluto ou relativo para o arquivo a ser lido.
+
+    Retorna:
+        list: Lista contendo cada linha do arquivo sem o caractere de quebra de linha.
+    """
+
     lista = []
     with open(caminho_arquivo, "r", encoding="utf-8") as arquivo:
         for linha in arquivo:
@@ -16,12 +18,14 @@ def ler_arquivo(caminho_arquivo: str) -> list:
 
 
 def escrever_arquivo(caminho_arquivo: str, conteudo: list) -> None:
-    """Escreve o conteúdo em um arquivo.
-
-    Args:
-    caminho_arquivo (str): O caminho para o arquivo a ser escrito.
-    conteudo (list): O conteúdo a ser escrito no arquivo, como uma lista de linhas.
     """
+    Escreve uma lista de strings em um arquivo .txt, adicionando quebras de linha automaticamente.
+
+    Parametros:
+        caminho_arquivo (str): Caminho absoluto ou relativo do arquivo de destino.
+        conteudo (list): Lista de linhas a serem gravadas no arquivo.
+    """
+
     with open(caminho_arquivo, "w", encoding="utf-8") as arquivo:
         for linha in conteudo:
             aux = f"{linha}\n"
@@ -29,6 +33,14 @@ def escrever_arquivo(caminho_arquivo: str, conteudo: list) -> None:
 
 
 def exibir_gramatica(gramatica: list, agrupar=False) -> None:
+    """
+    Exibe uma gramatica no terminal em formato legivel, com ou sem agrupamento das producoes.
+
+    Parametros:
+        gramatica (list): Estrutura contendo variaveis, terminais, simbolo inicial e producoes.
+        agrupar (bool, opcional): Se True, agrupa producoes por variavel. Padrao: False.
+    """
+
     print()
     print("=-=-=-=-= GRAMATICA =-=-=-=-=")
     print("Variaveis:", gramatica[0])
@@ -53,6 +65,25 @@ def exibir_gramatica(gramatica: list, agrupar=False) -> None:
         producao_agrupada = producao_agrupada[:-1]
         print(producao_agrupada)
     print()
+
+
+def ordenar_producoes(gramatica: list) -> list:
+    """
+    Retorna uma copia da gramatica com as producoes ordenadas lexicograficamente.
+
+    Parametros:
+        gramatica (list): Lista representando a gramatica completa.
+
+    Retorna:
+        list: Nova gramatica com suas producoes ordenadas.
+    """
+
+    gramatica_copia = gramatica[:]
+    producoes = gramatica_copia[3:]
+    producoes.sort()
+    gramatica_copia[3:] = producoes[:]
+
+    return gramatica_copia
 
 
 if __name__ == "__main__":
