@@ -71,7 +71,7 @@ if __name__ == "__main__":
     diretorio = "gramaticas"
     arquivo = "gramatica_portal.txt"
     gramatica = ler_arquivo(os.path.join(diretorio, arquivo))
-    exibir_gramatica(gramatica)
+    exibir_gramatica(gramatica, True)
     gramatica_limpa = limpar_producoes_nulas(gramatica)
-    exibir_gramatica(gramatica_limpa)
+    exibir_gramatica(gramatica_limpa, True)
     print(f"\nTempo: {time() - start:.8f} segundos")

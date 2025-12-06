@@ -69,21 +69,21 @@ def limpar_producoes_unidade(gramatica: list):
 
 if __name__ == "__main__":
     from time import time
-    from limpar_producoes_nulas import limpar_producoes_nulas
     from utils import ler_arquivo, exibir_gramatica
+    from limpar_producoes_nulas import limpar_producoes_nulas
     import os
 
     start = time()
     os.system("cls" if os.name == "nt" else "clear")
 
     diretorio = "gramaticas"
-    arquivo = "unidade/gramatica_2.txt"
+    arquivo = "gramatica_portal.txt"
 
     gramatica = ler_arquivo(os.path.join(diretorio, arquivo))
-    exibir_gramatica(gramatica)
-    gramatica = limpar_producoes_nulas(gramatica)
-    exibir_gramatica(gramatica)
-    gramatica = limpar_producoes_unidade(gramatica)
-
     exibir_gramatica(gramatica, True)
+    gramatica = limpar_producoes_nulas(gramatica)
+    exibir_gramatica(gramatica, True)
+    gramatica = limpar_producoes_unidade(gramatica)
+    exibir_gramatica(gramatica, True)
+
     print(f"\nTempo: {time() - start:.8f} segundos")

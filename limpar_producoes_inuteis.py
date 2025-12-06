@@ -68,16 +68,21 @@ def limpar_producoes_inuteis(gramatica: list) -> list:
 
 if __name__ == "__main__":
     from time import time
-    from utils import ler_arquivo
+    from utils import ler_arquivo, exibir_gramatica
+    from limpar_producoes_nulas import limpar_producoes_nulas
+    from limpar_producoes_unidade import limpar_producoes_unidade
     import os
 
     start = time()
     os.system("cls" if os.name == "nt" else "clear")
 
-    diretorio = "gramaticas/inuteis"
-    arquivo = "gramatica_1.txt"
+    diretorio = "gramaticas/"
+    arquivo = "gramatica_portal.txt"
     gramatica = ler_arquivo(os.path.join(diretorio, arquivo))
-    gramatica_limpa = limpar_producoes_inuteis(gramatica)
-    print(gramatica_limpa)
+    exibir_gramatica(gramatica, True)
+    gramatica = limpar_producoes_nulas(gramatica)
+    gramatica = limpar_producoes_unidade(gramatica)
+    gramatica = limpar_producoes_inuteis(gramatica)
+    exibir_gramatica(gramatica, True)
 
     print(f"\nTempo: {time() - start:.8f} segundos")
